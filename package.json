@@ -13,6 +13,9 @@
     "format:backend": "prettier -w \"backend/src/**/*.ts\"",
     "format:check:backend": "prettier -c \"backend/src/**/*.ts\""
   },
+  "pnpm": {
+    "onlyBuiltDependencies": ["prisma", "@prisma/engines"]
+  },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "8.46.2",
     "@typescript-eslint/parser": "8.46.2",

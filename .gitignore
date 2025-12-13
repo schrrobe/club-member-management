@@ -7,3 +7,6 @@ npm-debug.log*
 pnpm-debug.log*
 backend/.env.local
 backend/.env.prod
+backend/.env
+backend/prisma/dev.db
+backend/prisma/dev.db-journal
