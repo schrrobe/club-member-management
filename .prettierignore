@@ -1,0 +1,6 @@
+node_modules
+dist
+.pnpm-store
+pnpm-lock.yaml
+backend/node_modules
+backend/dist

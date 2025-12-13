@@ -1,0 +1,28 @@
+{
+  "name": "club-member-mangement-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsc -w --preserveWatchOutput & nodemon --watch dist dist/index.js",
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "start": "node --enable-source-maps dist/index.js",
+    "clean": "rm -rf dist",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.25.0",
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "22.18.13",
+    "nodemon": "^3.1.11",
+    "typescript": "5.8.3"
+  },
+  "dependencies": {
+    "dotenv": "17.2.3",
+    "express": "5.2.1"
+  }
+}
