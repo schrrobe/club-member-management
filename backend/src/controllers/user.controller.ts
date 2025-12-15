@@ -22,3 +22,26 @@ export async function postUser(req: Request, res: Response): Promise<void> {
     res.status(400).json({ error: (error as Error).message });
   }
 }
+
+export async function getMyClubs(req: Request, res: Response): Promise<void> {
+  try {
+    if (!req.userId) {
+      res.status(401).json({ error: "Unauthorized" });
+      return;
+    }
+    const clubs = await userService.listUserClubs(req.userId);
+    res.json(clubs);
+  } catch (error) {
+    res.status(400).json({ error: (error as Error).message });
+  }
+}
+
+export async function getUserClubs(req: Request, res: Response): Promise<void> {
+  try {
+    const { userId } = req.params;
+    const clubs = await userService.listUserClubs(userId);
+    res.json(clubs);
+  } catch (error) {
+    res.status(400).json({ error: (error as Error).message });
+  }
+}

@@ -10,5 +10,94 @@ model User {
   id        String   @id
   email     String   @unique
   name      String?
+  passwordHash String?
   createdAt DateTime @default(now())
+
+  memberships Membership[]
+  clubsCreated Club[] @relation("ClubCreator")
+}
+
+model Club {
+  id          String   @id
+  name        String
+  createdAt   DateTime @default(now())
+  createdById String
+
+  createdBy   User        @relation("ClubCreator", fields: [createdById], references: [id])
+  memberships Membership[]
+  roles       Role[]
+
+  @@index([createdById])
+}
+
+model Membership {
+  id        String   @id
+  userId    String
+  clubId    String
+  createdAt DateTime @default(now())
+
+  user  User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  club  Club @relation(fields: [clubId], references: [id], onDelete: Cascade)
+
+  roles       MembershipRole[]
+  permissions MembershipPermission[]
+
+  @@unique([userId, clubId])
+  @@index([clubId])
+}
+
+model Role {
+  id        String   @id
+  clubId    String
+  name      String
+  createdAt DateTime @default(now())
+
+  club        Club             @relation(fields: [clubId], references: [id], onDelete: Cascade)
+  memberships MembershipRole[]
+  permissions RolePermission[]
+
+  @@unique([clubId, name])
+  @@index([clubId])
+}
+
+model Permission {
+  id          String  @id
+  key         String  @unique
+  description String?
+
+  roles       RolePermission[]
+  memberships MembershipPermission[]
+}
+
+model MembershipRole {
+  membershipId String
+  roleId       String
+
+  membership Membership @relation(fields: [membershipId], references: [id], onDelete: Cascade)
+  role       Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@id([membershipId, roleId])
+  @@index([roleId])
+}
+
+model RolePermission {
+  roleId       String
+  permissionId String
+
+  role       Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@id([roleId, permissionId])
+  @@index([permissionId])
+}
+
+model MembershipPermission {
+  membershipId String
+  permissionId String
+
+  membership Membership @relation(fields: [membershipId], references: [id], onDelete: Cascade)
+  permission Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@id([membershipId, permissionId])
+  @@index([permissionId])
 }
